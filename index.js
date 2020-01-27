@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => res.sendFile(__dirname + "/" + "main.html"))
 
 app.post('/', (req, res) => {
+    //save the message
    recipient = req.body.recipient
    sender = req.body.sender
    subject = req.body.subject
@@ -20,6 +21,7 @@ app.post('/', (req, res) => {
       text: text,
    }
    console.log(msg)
+   //configure and send the message with sengrid
    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
    sgMail.send(msg)
    .then(() =>{
@@ -27,6 +29,7 @@ app.post('/', (req, res) => {
        res.send(response)
    })
    .catch(error =>{
+       //if it fails print the error and try the mailgun service
         console.log(error)
         console.log("The email service had an error")
         const DOMAIN = process.env.DOMAIN;
