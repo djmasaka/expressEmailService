@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/main.css">
+</head>
+<body>
+    <div id="form">
+        <div id="recipient">
+        <h3>To: (email)</h3>
+        <input type="email" name="recipient" />
+        </div>
+        <div>
+        <button onclick="addRecipient();">+</button>
+        <button onclick="deleteRecipient();">-</button>
+        </div>
+        <br />
+        <h3>From: (username)</h3>
+        <input type="text" name="sender" /> <br />
+        <h3>Subject: (text)</h3>
+        <input type="text" name="subject"/> <br />
+        <h3>Text: (text)</h3>
+        <textarea rows="4" cols="50" name="text"></textarea>
+        <br />
+        <p id="errorMessage"></p>
+        <button id="submit">Send</button>
+    </div>
+    <script type="text/javascript" src="/main.js"></script>
+</body>
+</html>
