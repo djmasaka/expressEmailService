@@ -2,12 +2,14 @@ require('dotenv').config()
 const sgMail = require('@sendgrid/mail')
 const mailgun = require("mailgun-js");
 const express = require('express')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
 
 app.use(express.static('public'))
 app.get('/', (req, res) => res.sendFile(__dirname + "/" + "main.html"))
 
+app.use(cors())
 app.use(bodyParser.json())
 app.post('/', (req, res) => {
     //save the message
@@ -42,6 +44,7 @@ app.post('/', (req, res) => {
             text: text
         };
         mg.messages().send(data, function (error, body) {
+            console.log(error)
             console.log(body);
         });
    })
