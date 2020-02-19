@@ -1,6 +1,7 @@
 require('dotenv').config()
 const sgMail = require('@sendgrid/mail')
-const mailgun = require("mailgun-js");
+const mailjet = require ('node-mailjet')
+.connect(process.env.MAILJET_PUBLIC_API_KEY, process.env.MAILJET_PRIVATE_API_KEY)
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -19,7 +20,7 @@ app.post('/', (req, res) => {
    text = req.body.text
    const msg = {
       to: recipient,
-      from: `${sender}@oursite.com`,
+      from: `${sender}@example.com`,
       subject: subject,
       text: text,
    }
@@ -35,18 +36,34 @@ app.post('/', (req, res) => {
        //if it fails print the error and try the mailgun service
         console.log(error)
         console.log("The email service had an error")
-        const DOMAIN = process.env.DOMAIN;
-        const mg = mailgun({apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN});
-        const data = {
-            from: `Mailgun Sandbox <postmaster@${process.env.DOMAIN}>`,
-            to: recipient,
-            subject: subject,
-            text: text
-        };
-        mg.messages().send(data, function (error, body) {
-            console.log(error)
-            console.log(body);
-        });
+        const request = mailjet
+        .post("send", {'version': 'v3.1'})
+        .request({
+        "Messages":[
+            {
+            "From": {
+                "Email": 'Joacity49@rhyta.com',
+                "Name": sender
+            },
+            "To": [
+                {
+                "Email": recipient,
+                "Name": ""
+                }
+            ],
+            "Subject": subject,
+            "TextPart": text,
+            "CustomID": "AppGettingStartedTest"
+            }
+        ]
+        })
+        request
+        .then((result) => {
+            console.log(result.body)
+        })
+        .catch((err) => {
+            console.log(err.statusCode)
+        })
    })
 
  })
