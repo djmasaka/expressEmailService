@@ -15,12 +15,11 @@ app.use(bodyParser.json())
 app.post('/', (req, res) => {
     //save the message
    recipient = req.body.recipient
-   sender = req.body.sender
    subject = req.body.subject
    text = req.body.text
    const msg = {
       to: recipient,
-      from: `${sender}@example.com`,
+      from: 'noreply@example.com',
       subject: subject,
       text: text,
    }
@@ -33,7 +32,7 @@ app.post('/', (req, res) => {
        res.send(response)
    })
    .catch(error =>{
-       //if it fails print the error and try the mailgun service
+       //if it fails print the error and try the mailjet service
         console.log(error)
         console.log("The email service had an error")
         const request = mailjet
@@ -43,12 +42,12 @@ app.post('/', (req, res) => {
             {
             "From": {
                 "Email": 'Joacity49@rhyta.com',
-                "Name": sender
+                "Name": 'none'
             },
             "To": [
                 {
                 "Email": recipient,
-                "Name": ""
+                "Name": 'none'
                 }
             ],
             "Subject": subject,
