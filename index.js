@@ -41,7 +41,7 @@ app.post('/', (req, res) => {
         "Messages":[
             {
             "From": {
-                "Email": 'Joacity49@rhyta.com',
+                "Email": 'noreply@fleckens.hu',
                 "Name": 'none'
             },
             "To": [
